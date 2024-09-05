@@ -50,7 +50,12 @@ jobs:
           cmd: install
           dir: greenlight
 
-      - name: Build Greenlight app deb file and AppImage
+      - name: Build Greenlight app deb file and AppImage for x64
+        run: |
+          cd greenlight
+          yarn build
+
+      - name: Build Greenlight app deb file and AppImage for arm64
         run: |
           cd greenlight
           npx electron-builder --arm64
