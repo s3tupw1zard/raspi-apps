@@ -45,8 +45,9 @@ jobs:
           dir: greenlight
 
       - name: Build Greenlight app deb file and AppImage
-        working-directory: greenlight
-        run: 'npx electron-builder --arm64'
+        run: |
+          cd greenlight
+          npx electron-builder --arm64
 
       - name: Release Greenlight
         uses: softprops/action-gh-release@v1
