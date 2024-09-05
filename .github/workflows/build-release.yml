@@ -47,7 +47,7 @@ jobs:
       - name: Build Greenlight app deb file and AppImage
         run: |
           cd greenlight
-          ls app
+          git submodule update --init --recursive
           npx electron-builder --arm64
 
       - name: Release Greenlight
