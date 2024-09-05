@@ -33,6 +33,11 @@ jobs:
         run: |
           git clone --recurse-submodules https://github.com/s3tupw1zard/raspi-apps .
 
+      - name: Initialize submodules for Greenlight
+        run: |
+          cd greenlight
+          git submodule update --init --recursive
+
       - name: Set Node.js 22.x
         uses: actions/setup-node@v3
         with:
@@ -47,7 +52,6 @@ jobs:
       - name: Build Greenlight app deb file and AppImage
         run: |
           cd greenlight
-          git submodule update --init --recursive
           npx electron-builder --arm64
 
       - name: Release Greenlight
