@@ -5,25 +5,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-submodules:
-    runs-on: ubuntu-latest
+#  update-submodules:
+#    runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          submodules: true  # Automatisch Submodule beim Checkout initialisieren
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#        with:
+#          submodules: true  # Automatisch Submodule beim Checkout initialisieren
 
-      - name: Update all submodules
-        run: |
-          git submodule foreach '
-            current_branch=$(git symbolic-ref --short HEAD)  # Find out current branch of each submodule
-            git checkout $current_branch
-            git pull origin $current_branch
-          '
+ #     - name: Clone this repository
+ #       run: |
+ #         git clone --recurse-submodules https://github.com/s3tupw1zard/raspi-apps .
 
-      - name: Verify submodule update
-        run: git submodule status
+ #     - name: Verify submodule update
+ #       run: git submodule status
 
 
 
@@ -32,7 +28,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+#      - uses: actions/checkout@v3
+      - name: Clone this repository into current folder
+        run: |
+          git clone --recurse-submodules https://github.com/s3tupw1zard/raspi-apps .
 
       - name: Set Node.js 22.x
         uses: actions/setup-node@v3
