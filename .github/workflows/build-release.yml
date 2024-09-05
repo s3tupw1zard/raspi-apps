@@ -70,4 +70,4 @@ jobs:
           body_path: greenlight/CHANGELOG.md
           files: |
             greenlight/dist/greenlight*.deb
-            greenlight/dist/greenlight*.AppImage
+            greenlight/dist/Greenlight*.AppImage
