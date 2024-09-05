@@ -28,6 +28,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set environment variables
+        run: echo "GITHUB_PAT=${{ secrets.PAT_TOKEN }}" >> $GITHUB_ENV
 #      - uses: actions/checkout@v3
       - name: Clone this repository into current folder
         run: |
