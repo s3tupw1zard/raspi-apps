@@ -37,6 +37,7 @@ jobs:
         run: |
           cd greenlight
           git submodule update --init --recursive
+          ls -l
 
       - name: Set Node.js 22.x
         uses: actions/setup-node@v3
