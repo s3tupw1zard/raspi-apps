@@ -1,0 +1,59 @@
+name: CI
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+
+jobs:
+  update-submodules:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true  # Automatisch Submodule beim Checkout initialisieren
+
+      - name: Update all submodules
+        run: |
+          git submodule foreach '
+            current_branch=$(git symbolic-ref --short HEAD)  # Find out current branch of each submodule
+            git checkout $current_branch
+            git pull origin $current_branch
+          '
+
+      - name: Verify submodule update
+        run: git submodule status
+
+
+
+  build-greenlight:
+    name: Build Greenlight
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set Node.js 22.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22.x
+
+      - name: Run install
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install
+          dir: greenlight
+
+      - name: Build Greenlight app deb file and AppImage
+        working-directory: greenlight
+        run: 'npx electron-builder --arm64'
+
+      - name: Release Greenlight
+        uses: softprops/action-gh-release@v1
+        with:
+          prerelease: false
+          tag_name: greenlight
+          body_path: greenlight/CHANGELOG.md
+          files: |
+            greenlight/dist/greenlight*.deb
+            greenlight/dist/greenlight*.AppImage
